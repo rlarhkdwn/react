@@ -1,0 +1,30 @@
+user 파일 수행 순서
+
+1. 컴포넌트 분리 (폴더 생성) => user
+2. UserList.tsx 파일 생성 => users 객체 정의 => 정의한 객체를 출력
+    => userList 함수 생성 후 필요한 users 정의
+    => 한사람의 객체를 출력하는 user 객체를 정의
+    => props로 user 객체를 전달하여 출력
+    => props로 전달되는 객체의 타입을 정의할 때 user 객체타입과, props의 타입 둘다 정의
+
+==========================================================================================
+
+User CRUD
+
+- app/type/type.ts 파일 생성 => user 타입 정의
+
+1. UserList2.tsx 파일 생성 => 실제 CRUD가 실행되는 대상
+    => users 객체에 변화를 주기 위해 (등록, 리스트, 삭제, 수정) 
+    => useState()로 관리
+
+    User => UserList1 => UserList2 순서대로 하위 컴포넌트
+
+2. UserList1.tsx 파일 생성
+    => User의 삭제 / 토글 버튼 추가
+    => 실제 구현은 UserList2에서 작동하고, UserList1에서는 map 출력 (각자의 삭제와 토글 기능)
+
+3. User.tsx 파일 생성
+    => 삭제 번튼과 토글 기능 id를 전달
+
+4. CreateUser.tsx 파일 생성
+    => User 등록을 위한 컴포넌트

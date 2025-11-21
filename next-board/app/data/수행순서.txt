@@ -1,0 +1,98 @@
+next.js <-> DB 연결
+
+- 설치 라이브러리 
+npm i mysql2 => DB
+npm i axios => 비동기 (fetch 내장 함수를 사용하면 설치 안해도 됨)
+
+- DB 구성 완료 => 파일 참조.
+
+1. 폴더구성
+    components > layout > Header.tsx / Footer.tsx
+    components > board > boardList.tsx
+    data > data.ts (sample data)
+    type > boardType.ts (boardType 정의)
+    api > DB 연결 함수
+    board > 라우트 연결 page
+    lib > DB 설정 구문
+
+2. layout 구성하기 => lay.tsx => Headrer.tsx / Foote/rst 삽입
+
+3. data.ts sample data 넣기
+
+4. boardType.ts 데이터 타입 선언
+
+5. components > board > BoardList.tsx 생성
+    data.ts => BoardList 구성
+    table > title 부분에 링크 생성 => [id] => detail 라우트
+    table 하단에 home add => board > write 라우트
+
+6. board > [id] > page.tsx 라우트 생성 (상세 페이지)
+    하단 버튼 생성
+    list => 목록 href="/board"
+    modify => 수정 href="/board/[id]/modify"
+    delete => 삭제 버튼 모양만
+
+7. board > [id] > modify 생성 (게시글 수정)
+    page 생성 후 비동기로 DB 연결을 할 예정이라 따로 처리 X
+    detail page와 똑같이 복사 후 input으로 변경만 함.
+    하단 버튼
+    reset => 수정 취소
+    modify => 수정 처리
+
+8. board > write 생성 (게시글 등록)
+    modify 와 같이 모양만 잡아주고 DB로 연결할 형태로만 구현
+
+- read, detail => 가져오는 get 부분은 화면에 표시만 해주면 됨.
+- create, update => 화면에서 객체를 생성 post => DB 전달
+- rest API : 자원을 이름으로 구분하여 해당 자원의 상태를 표현
+- CRUD (create, read, update, delete)
+- C: create => 데이터 생성 => POST
+- R: read => 데이터 조회 => GET
+- U: update => 데이터 수정 => PUT
+- D: delete => 데이터 삭제 => DELETE
+
+======================================================================
+DB 연결
+9. .env 작성 규칙 : 환경변수를 관리하는 파일
+React 에서는 변수명 REACT_APP_ 으로 시작되어야 한다.
+Next.js 에서는 변수명 NEXT_PUBLIC_ 으로 시작되어야 한다.
+변수명과 값 사이는 공백 또는 따옴표("")가 존재해서는 안된다.
+변수명은 대문자로 작성하는것이 관례
+파일은 프로젝트 폴더에 작성 => .env.local
+
+10. lib > db.ts 파일 생성
+    DB 설정 사항 작성
+    => .env.local 파일을 자동으로 호출
+    => .env.local 파일은 숨김 파일로 git에 올라가지 않고 파일을 참조해서 사용
+    => api key, password, 서버URL 등을 관리
+
+- api > DB 연결 함수 폴더 구성
+- api > board > route.ts => /api/board => GET(전체 조회), POST(생성)
+- api > board > [id] > route.ts => /api/board/[id] => PUT(수정), GET(단일 조회), DELETE(삭제)
+
+11. write 페이지에서 비동기 데이터 추가 (POST)
+    => write 페이지에서 onChange로 데이터 생성 후 비동기로 보내기
+
+12. api > board > route.ts 에서 POST 값으로 처리
+    => DB에서 추가되는지 확인
+
+- insert, update, delete => DB 내부에서 처리
+- select => 사용자에게 리턴하는 테이블이 있음
+
+13. boardList 전체 페이지 비동기 호출 (GET)
+    => 비동기 함수를 추가하여 DB에서 가져온 데이터로 화면 작성
+
+14. boardList의 비동기 요청에 대한 서버처리
+    => api > board > route.ts 에서 처리
+
+15. detail 페이지에서 비동기 요청 처리 (GET)
+    => api > board > [id] > route.ts 에서 처리
+    => 삭제 비동기 요청 처리 (DELETE)
+    => api > board > [id] > route.ts 에서 처리
+
+16. modify 페이지에서 비동기 요청 처리 (PUT)
+    => delete + write 합쳐놓은 값,
+    => detail 에서처럼 값을 가져와서 화면을 생성한 후
+    => write 처럼 onChange로 수정해서 객체를 생성 후
+    => [id] 의 동적 폴더로 객체를 전송
+    => api > board > [id] > route.ts

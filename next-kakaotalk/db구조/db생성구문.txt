@@ -1,0 +1,67 @@
+1. 회원 테이블
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(50) NOT NULL,
+  password VARCHAR(200) NOT NULL,
+  nickname VARCHAR(50) NOT NULL,
+  created_date DATETIME DEFAULT NOW()
+);
+
+
+2. 친구 테이블
+CREATE TABLE friends (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    friend_id INT NOT NULL,
+    state ENUM('pending', 'accepted', 'blocked') NOT NULL DEFAULT 'pending',
+    created_date DATETIME DEFAULT NOW(),
+
+    CONSTRAINT fk_friends_user FOREIGN KEY (user_id) 
+    REFERENCES users(id),
+    CONSTRAINT fk_friends_friend FOREIGN KEY (friend_id) 
+    REFERENCES users(id),
+    UNIQUE KEY uq_friend_pair (user_id, friend_id)
+);
+
+
+3. 채팅방 테이블
+CREATE TABLE chat_rooms (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  room_name VARCHAR(50),
+  is_group BOOLEAN NOT NULL DEFAULT FALSE,
+  used_date DATETIME DEFAULT NOW(),
+  created_date DATETIME DEFAULT NOW(),
+  
+  UNIQUE KEY uq_group_room (room_name, is_group)
+);
+
+
+4. 채팅방 멤버 테이블
+CREATE TABLE chat_room_members (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    room_id INT NOT NULL,
+    user_id INT NOT NULL,
+    joined_date DATETIME DEFAULT NOW(),
+
+    CONSTRAINT fk_members_room FOREIGN KEY (room_id) 
+    REFERENCES chat_rooms(id),
+    CONSTRAINT fk_members_user FOREIGN KEY (user_id) 
+    REFERENCES users(id),
+    UNIQUE KEY uq_room_member (room_id, user_id)
+);
+
+
+5. 메시지 테이블
+CREATE TABLE messages (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  room_id INT NOT NULL,
+  sender_id INT NOT NULL,
+  message TEXT NOT NULL,
+  created_date DATETIME DEFAULT NOW(),
+
+  CONSTRAINT fk_msg_room FOREIGN KEY (room_id) 
+    REFERENCES chat_rooms(id),
+
+  CONSTRAINT fk_msg_sender FOREIGN KEY (sender_id) 
+    REFERENCES users(id)
+);

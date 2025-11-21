@@ -1,0 +1,38 @@
+*{
+    margin: 0;
+}
+.App {
+    text-align: center;
+}
+.header {
+    background-color: rgb(255, 213, 107);
+    height: 100px;
+    padding: 20px 0;
+    box-sizing: border-box;
+}
+.header > ul{
+    list-style: none;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header > ul > li{
+    margin: 20px;
+    font-weight: 700;
+    font-size: 18px;
+}
+.home, .comp{
+    background-color: bisque;
+    height: 500px;
+    padding: 10px 0;
+}
+.comp > h2{
+    padding: 10px 0;
+}
+
+.footer{
+    background-color: rgb(181, 221, 208);
+    height: 50px;
+}
