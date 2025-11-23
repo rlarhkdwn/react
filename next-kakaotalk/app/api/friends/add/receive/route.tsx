@@ -20,12 +20,12 @@ export async function GET(req: Request) {
         const myId = decoded.id;
 
         // 친구 신청 목록 조회 friend_id가 본인이고 state가 pending인 것만 조회
-        const [nicknames] = await db.query(
-            "SELECT u.nickname FROM friends f JOIN users u ON f.user_id = u.id WHERE f.friend_id = ? AND f.state = 'pending'",
+        const [results] = await db.query(
+            "SELECT u.id, u.nickname FROM friends f JOIN users u ON f.user_id = u.id WHERE f.friend_id = ? AND f.state = 'pending'",
             [myId]
         );
         
-        return NextResponse.json(nicknames);
+        return NextResponse.json(results);
         
     } catch (e) {
         console.error(e); return NextResponse.json({ message: "서버 오류" }, { status: 500 }); 

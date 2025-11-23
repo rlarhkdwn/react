@@ -30,9 +30,7 @@ CREATE TABLE chat_rooms (
   room_name VARCHAR(50),
   is_group BOOLEAN NOT NULL DEFAULT FALSE,
   used_date DATETIME DEFAULT NOW(),
-  created_date DATETIME DEFAULT NOW(),
-  
-  UNIQUE KEY uq_group_room (room_name, is_group)
+  created_date DATETIME DEFAULT NOW()
 );
 
 

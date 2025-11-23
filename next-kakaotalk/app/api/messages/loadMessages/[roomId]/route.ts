@@ -1,15 +1,18 @@
+import { verifyToken } from "@/app/lib/auth";
 import db from "@/app/lib/db";
+import { JWTPayload } from "@/app/type/type";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { verifyToken } from "@/app/lib/auth";
-import { JWTPayload } from "@/app/type/type";
 
-export async function GET() {
+export async function GET(req: Request, props: any) {
     try {
+        const params = await props.params; // 반드시 여기서 구조분해하기 (위의 매개변수 받는곳에서 구조분해시 promise객체로 바뀜)
+        const roomId = params.roomId;
+
         // 1. 쿠키에서 JWT 꺼내기
         const cookieStore = await cookies();
         const token = cookieStore.get("token")?.value;
-
+        
         if (!token) {
             return NextResponse.json(
                 { message: "로그인이 필요합니다." },
@@ -29,14 +32,16 @@ export async function GET() {
 
         const userId = decoded.id; // ← JWT에 넣어둔 값
 
-        // 3. DB에서 친구 목록 가져오기
-        const [results]: any = await db.query(
-            "SELECT u.id, u.nickname FROM friends f join users u on f.friend_id = u.id WHERE f.user_id = ? ORDER BY u.nickname",
-            [userId]
+        const [rows] = await db.query(`
+            SELECT sender_id, message, created_date FROM messages WHERE room_id = ? ORDER BY created_date
+        `, [roomId])
+        return NextResponse.json(
+            {
+                message: "메시지 조회 성공",
+                data: rows
+            },
+            { status: 200 }
         );
-
-        return NextResponse.json(results);
-
     } catch (error) {
         console.error(error);
         return NextResponse.json(

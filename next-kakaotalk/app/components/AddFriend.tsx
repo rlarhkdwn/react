@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-export default function AddFriend() {    // 친구추가 api
+interface ChildProps {
+    handleSuccess: () => void;
+}
+
+export default function AddFriend({ handleSuccess }: ChildProps) {    // 친구추가 api
     const addFriend = async ()=>{
         if (!input.trim()) return;
 
@@ -24,6 +28,7 @@ export default function AddFriend() {    // 친구추가 api
             }
 
             if (res.ok) {
+                handleSuccess();
                 alert("친구 요청을 보냈습니다.");
             }
 

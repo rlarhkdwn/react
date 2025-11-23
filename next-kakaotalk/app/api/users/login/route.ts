@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
                 nickname: user.nickname
             },
             process.env.JWT_SECRET!,   // 비밀키
-            { expiresIn: "1d" }        // 토큰 만료 1일
+            { expiresIn: "1h" }        // 토큰 만료 1시간
         );
 
         // 4. 쿠키에 JWT 저장
