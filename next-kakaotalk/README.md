@@ -79,7 +79,28 @@ DB Insert 후 정상 전송 응답 반환
 
 
 # **4. 이미지**
-
+로그인
+<img width="1916" height="953" alt="Image" src="https://github.com/user-attachments/assets/b9dd061b-658a-41ea-b3ed-ca87358c1582" />
+회원가입
+<img width="1915" height="956" alt="Image" src="https://github.com/user-attachments/assets/8dcc0060-2d0d-41f0-aa40-0777fdc68106" />
+메인-친구
+<img width="1913" height="956" alt="Image" src="https://github.com/user-attachments/assets/8ea3c02f-afa0-4e6c-827e-3bf2c7e8e045" />
+id로 친구 추가
+<img width="1915" height="951" alt="Image" src="https://github.com/user-attachments/assets/df3138fc-fa6f-4dcc-bbf4-7f692d1a7b54" />
+받은 친구 신청
+<img width="1916" height="953" alt="Image" src="https://github.com/user-attachments/assets/84f2a045-9b18-4a44-9874-aa9d477b0445" />
+친구 프로필
+<img width="1915" height="955" alt="Image" src="https://github.com/user-attachments/assets/412d3144-8740-48cc-a132-7a9a002ed424" />
+메인-채팅
+<img width="1915" height="949" alt="Image" src="https://github.com/user-attachments/assets/49ab01d1-c0a6-493d-98ef-fd8619c41732" />
+그룹 채팅 생성
+<img width="1915" height="954" alt="Image" src="https://github.com/user-attachments/assets/12230e31-f14b-4f4d-9616-9ddc3cf4da51" />
+채팅1
+<img width="1917" height="955" alt="Image" src="https://github.com/user-attachments/assets/38dd43fc-688f-4fa5-9f9d-5e46326a5c94" />
+채팅2
+<img width="1915" height="956" alt="Image" src="https://github.com/user-attachments/assets/be0c63f9-bcf4-4a90-bb4e-b7dfa87cb4d2" />
+채팅3
+<img width="1915" height="954" alt="Image" src="https://github.com/user-attachments/assets/bafb721c-58f1-4e08-a099-81580f8cf808" />
 
 # **5. 트러블슈팅**
 1) Next.js Dynamic Route params가 Promise 객체로 나오는 문제
