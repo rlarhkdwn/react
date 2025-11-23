@@ -19,10 +19,14 @@ export default function ChatRoom({
     myId: string | null;
 }) {
     // 본인 제외한 유저 이름만 표시
-    const displayMembers = chatRoom.members
+    const otherMembers = chatRoom.members
         .filter((m) => m.memberId !== myId)
         .map((m) => m.memberName)
         .join(", ");
+
+    const displayNames = otherMembers && otherMembers.length > 30
+        ? otherMembers.slice(0, 30) + "..."
+        : otherMembers;
 
     return (
         <div className="flex items-center pl-8 pr-8 pt-2 pb-2 hover:bg-gray-100 w-110 cursor-pointer">
@@ -43,7 +47,7 @@ export default function ChatRoom({
 
             <div>
                 <p className="font-semibold text-lg">
-                    {chatRoom.roomName ? chatRoom.roomName : displayMembers}
+                    {chatRoom.roomName ? chatRoom.roomName : displayNames}
                 </p>
 
                 <span className="ml-1 text-gray-600 text-sm inline-block max-w-[160px] truncate">

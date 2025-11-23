@@ -20,6 +20,7 @@ interface MessageProps {
     message: string;
     created_date: string;
     myId: string | null;
+    nickname: string;
 }
 
 export default function ChatRoomClient({ roomId }: { roomId: string }) {
@@ -43,8 +44,6 @@ export default function ChatRoomClient({ roomId }: { roomId: string }) {
 
         loadMyId();
     }, []);
-
-    const [render, setRender] = useState(false); // 재랜더링용 변수
 
     const [roomInfo, setRoomInfo] = useState<ChatRoom | null>(null);
     useEffect(() => {
@@ -77,8 +76,8 @@ export default function ChatRoomClient({ roomId }: { roomId: string }) {
     ?.join(", ");                         // 쉼표로 연결
 
     const displayNames =
-    otherMembers && otherMembers.length > 10
-        ? otherMembers.slice(0, 10) + "..."
+    otherMembers && otherMembers.length > 30
+        ? otherMembers.slice(0, 30) + "..."
         : otherMembers;
 
     const [text, setText] = useState('');
@@ -88,8 +87,6 @@ export default function ChatRoomClient({ roomId }: { roomId: string }) {
     }
 
     const sendMessage = async () => {
-        if (!text.trim()) return; // 빈 메시지 방지
-
         try {
             const res = await fetch(`/api/messages/add/${roomId}`, {
                 method: "POST",
@@ -119,8 +116,7 @@ export default function ChatRoomClient({ roomId }: { roomId: string }) {
     };
 
     const [messages, setMessages] = useState([]);
-    useEffect(()=>{
-        const loadMessage = async () => {
+    const loadMessage = async () => {
             try {
                 console.log('메시지 조회중')
                 const res = await fetch(`/api/messages/loadMessages/${roomId}`);
@@ -138,8 +134,9 @@ export default function ChatRoomClient({ roomId }: { roomId: string }) {
                 console.log("메시지 조회 중 오류:", error);
             }
         };
+    useEffect(()=>{
         loadMessage();
-    }, [render])
+    }, [])
 
     // 항상 스크롤 아래로 내리기
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -170,6 +167,7 @@ export default function ChatRoomClient({ roomId }: { roomId: string }) {
                                 message={msg.message}
                                 created_date={msg.created_date}
                                 myId={myId}
+                                nickname={msg.nickname}
                             />
                         );
                     })
@@ -183,12 +181,12 @@ export default function ChatRoomClient({ roomId }: { roomId: string }) {
                 value={text}
                 placeholder="메시지 입력"
                 onChange={onchange}
-                onKeyDown={(e) => {
+                onKeyDown={async (e) => {
                     if (e.key === "Enter" && !e.shiftKey) {
                         e.preventDefault();   // textarea 줄바꿈 방지
                         if (text){
-                            sendMessage();    // 전송 함수 실행
-                            setRender(!render);
+                            await sendMessage();    // 전송 함수 실행
+                            loadMessage();    // 메시지 로드
                         } 
                     }
                 }}

@@ -33,7 +33,7 @@ export async function GET(req: Request, props: any) {
         const userId = decoded.id; // ← JWT에 넣어둔 값
 
         const [rows] = await db.query(`
-            SELECT sender_id, message, created_date FROM messages WHERE room_id = ? ORDER BY created_date
+            SELECT m.sender_id, m.message, m.created_date, u.nickname FROM messages m JOIN users u ON m.sender_id = u.id WHERE m.room_id = ? ORDER BY created_date
         `, [roomId])
         return NextResponse.json(
             {
