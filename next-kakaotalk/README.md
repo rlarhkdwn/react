@@ -5,6 +5,19 @@ Next.js 기반으로 구현한 카카오톡 클론 채팅 서비스입니다.
 카카오톡의 주요 기능 UI/UX를 재현하고 다양한 기능을 직접 구현한 프로젝트입니다.
 <br>
 <br>
+
+# 목차
+### 1. 주요 특징
+### 2. 기술 스택
+### 3. 기능 상세
+### 4. 이미지
+### 5. 트러블슈팅
+### 6. 개선 예정 기능
+### 7. 실행 방법
+### 8. .env.local
+### 9. db 생성 구문
+### 10. 필요 패키지
+
 # **1. 주요 특징**
 - 로그인 및 회원가입 기능 구현
 - 카카오톡 UI 스타일의 채팅 기능 구현
@@ -202,3 +215,9 @@ CREATE TABLE messages (
     CONSTRAINT fk_msg_sender FOREIGN KEY (sender_id)   
     REFERENCES users(id)  
 );
+
+
+# **10. 필요 패키지**
+- npm install bcrypt
+- npm install jsonwebtoken
+- npm install mysql2
